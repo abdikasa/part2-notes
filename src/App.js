@@ -37,7 +37,11 @@ const App = () => {
       .update(id, changeNote)
       .then((response) =>
         setNotes(notes.map((note) => (note.id !== id ? note : response.data)))
-      );
+      )
+      .catch((err) => {
+        console.log(err);
+        setNotes(notes.filter((n) => n.id !== id));
+      });
   };
 
   const handleNoteChange = (event) => {
