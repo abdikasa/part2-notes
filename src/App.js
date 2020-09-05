@@ -28,6 +28,20 @@ const App = () => {
     });
   };
 
+  const toggleChange = (id) => {
+    const url = `http://localhost:3001/notes/${id}`;
+    //find the object, return object by using id.
+    const note = notes.find((n) => n.id === id);
+    const changeNote = { ...note, important: !note.important };
+
+    //put or patch can be used.
+    axios
+      .put(url, changeNote)
+      .then((response) =>
+        setNotes(notes.map((note) => (note.id !== id ? note : response.data)))
+      );
+  };
+
   const handleNoteChange = (event) => {
     setNewNote(event.target.value);
   };
@@ -44,7 +58,13 @@ const App = () => {
       </div>
       <ul>
         {notesToShow.map((note, i) => (
-          <Note key={i} note={note} />
+          <Note
+            key={i}
+            note={note}
+            toggle={() => {
+              toggleChange(note.id);
+            }}
+          />
         ))}
       </ul>
       <form onSubmit={addNote}>
