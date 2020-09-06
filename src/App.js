@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Note from "./components/Note";
 import noteService from "./services/notes";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -39,7 +40,6 @@ const App = () => {
         setNotes(notes.map((note) => (note.id !== id ? note : response.data)))
       )
       .catch((err) => {
-        console.log(err);
         setNotes(notes.filter((n) => n.id !== id));
       });
   };
@@ -73,6 +73,7 @@ const App = () => {
         <input value={newNote} onChange={handleNoteChange} />
         <button type="submit">save</button>
       </form>
+      <Footer></Footer>
     </div>
   );
 };
